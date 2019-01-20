@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">SBTS</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="submit">Submit</string>
+    <string name="enter_your_username">Enter your username</string>
+    <string name="enter_your_phone_number">Enter your phone number</string>
+    <string name="enter_your_new_password">Enter your new Password</string>
+    <string name="enter_your_email_address">Enter your Email Address</string>
+    <string name="registration_form">Registration Form</string>
+    <string name="select_your_role">Select your role:</string>
+    <string name="logo">logo</string>
+    <string name="anime_title">Anime Title</string>
+    <string name="_0_0">0.0</string>
+    <string name="category">Category</string>
+    <string name="studio">Studio</string>
+    <string-array name="Role">
+        <item>Parent</item>
+        <item>Attendee</item>
+    </string-array>
+</resources>
