@@ -38,6 +38,8 @@ public class Attendee extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendee);
 
+        final Intent intent = getIntent();
+
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -53,7 +55,7 @@ public class Attendee extends AppCompatActivity {
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, new LocationListener() {
                 @Override
                 public void onLocationChanged(final Location location) {
-                    String url ="https://defcon12.000webhostapp.com/loc.php";
+                    String url ="https://defcon12.000webhostapp.com/Locationout.php";
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                             new Response.Listener<String>() {
                                 @Override
@@ -73,8 +75,9 @@ public class Attendee extends AppCompatActivity {
                         @Override
                         protected Map<String, String> getParams() throws AuthFailureError {
                             Map<String, String> params = new HashMap<String, String>();
-                            params.put("alat",String.valueOf(location.getLatitude()));
-                            params.put("along",String.valueOf(location.getLongitude()));
+                            params.put("lat",String.valueOf(location.getLatitude()));
+                            params.put("lng",String.valueOf(location.getLongitude()));
+                            params.put("email",intent.getStringExtra("USER_NAME"));
                             return params;
                         }
                     };
@@ -100,7 +103,7 @@ public class Attendee extends AppCompatActivity {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
                 @Override
                 public void onLocationChanged(final Location location) {
-                    String url ="https://defcon12.000webhostapp.com/loc.php";
+                    String url ="https://defcon12.000webhostapp.com/Locationout.php";
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                             new Response.Listener<String>() {
                                 @Override
@@ -120,8 +123,9 @@ public class Attendee extends AppCompatActivity {
                         @Override
                         protected Map<String, String> getParams() throws AuthFailureError {
                             Map<String, String> params = new HashMap<String, String>();
-                            params.put("alat",String.valueOf(location.getLatitude()));
-                            params.put("along",String.valueOf(location.getLongitude()));
+                            params.put("lat",String.valueOf(location.getLatitude()));
+                            params.put("lng",String.valueOf(location.getLongitude()));
+                            params.put("email","aniket.y@somaiya.edu");
                             return params;
                         }
                     };

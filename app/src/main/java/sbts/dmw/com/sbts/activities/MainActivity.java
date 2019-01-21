@@ -43,11 +43,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+       // SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("user",MODE_PRIVATE);
+
+        final Intent RegForm = new Intent(this,RegisterUser.class);
+        final Intent PassReset = new Intent(this,PasswordReset.class);
         TextView textView = findViewById(R.id.registerUser);
         String text = "If your not a registered user click here to sign-up";
         SpannableString ss = new SpannableString(text);
-        final Intent RegForm = new Intent(this,RegisterUser.class);
-        final Intent PassReset = new Intent(this,PasswordReset.class);
         ClickableSpan cs = new ClickableSpan() {
             @Override
             public void onClick(View widget) {
@@ -108,7 +110,9 @@ public class MainActivity extends AppCompatActivity {
                                     Intent EnAct = new Intent(MainActivity.this,MapsActivity.class);
                                     startActivity(EnAct);
                                 }else{
+                                    String msg = usernameEnMap.getText().toString();
                                     Intent Attend = new Intent(getApplicationContext(),Attendee.class);
+                                    Attend.putExtra("USER_NAME",msg);
                                     startActivity(Attend);
                                 }
                                 finish();
@@ -126,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String>  params = new HashMap<String, String>();
                         params.put("password", passwordEnMap.getText().toString());
-                        params.put("username", usernameEnMap.getText().toString());
+                        params.put("email", usernameEnMap.getText().toString());
                         return params;
                     }
             };

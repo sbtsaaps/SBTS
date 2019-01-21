@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">SBTS</string>
     <string name="title_activity_maps">Map</string>
     <string name="submit">Submit</string>
@@ -13,6 +13,16 @@
     <string name="_0_0">0.0</string>
     <string name="category">Category</string>
     <string name="studio">Studio</string>
+    <string name="please_select_your_role">Please select your role:</string>
+    <string name="parent">PARENT</string>
+    <string name="attendee">ATTENDEE</string>
+    <string name="enter_your_first_name">Enter your first name</string>
+    <string name="enter_your_middle_name">Enter your middle name</string>
+    <string name="enter_your_last_name">Enter your last name</string>
+    <string name="enter_your_email_address" tools:ignore="DuplicateDefinition">Enter your Email Address</string>
+    <string name="enter_your_phone_number" tools:ignore="DuplicateDefinition">Enter your phone number</string>
+    <string name="submit" tools:ignore="DuplicateDefinition">Submit</string>
+    <string name="enter_your_child_s_id_number">Enter your child\'s ID number</string>
     <string-array name="Role">
         <item>Parent</item>
         <item>Attendee</item>
