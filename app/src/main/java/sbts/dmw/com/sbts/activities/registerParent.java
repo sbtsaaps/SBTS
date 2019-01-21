@@ -1,9 +1,14 @@
 package sbts.dmw.com.sbts.activities;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -21,11 +26,19 @@ import sbts.dmw.com.sbts.R;
 public class registerParent extends AppCompatActivity {
 
     EditText first_Name, mid_Name, last_Name,email_Address, phone_Number, student_ID;
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_parent);
+
+        textView = findViewById(R.id.regParent);
+        String text = "Parent Registration";
+        SpannableString ss = new SpannableString(text);
+        ForegroundColorSpan fcs = new ForegroundColorSpan(Color.RED);
+        ss.setSpan(fcs,0,19, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        textView.setText(ss);
 
         first_Name = findViewById(R.id.firstName);
         mid_Name = findViewById(R.id.midName);
