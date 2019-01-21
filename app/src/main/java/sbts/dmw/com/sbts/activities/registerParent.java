@@ -37,7 +37,7 @@ public class registerParent extends AppCompatActivity {
     }
 
     public void Submit(View view) {
-        String url ="https://defcon12.000webhostapp.com/Attendeeload.php";
+        String url ="https://defcon12.000webhostapp.com/parentload.php";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
