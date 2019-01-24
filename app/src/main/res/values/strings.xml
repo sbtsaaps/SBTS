@@ -11,12 +11,14 @@
     <string name="studio">Studio</string>
     <string name="parent">PARENT</string>
     <string name="attendee">ATTENDEE</string>
-    <string name="enter_your_first_name">Enter your first name</string>
-    <string name="enter_your_middle_name">Enter your middle name</string>
-    <string name="enter_your_last_name">Enter your last name</string>
-    <string name="enter_your_email_address">Enter your Email Address</string>
-    <string name="enter_your_phone_number">Enter your phone number</string>
-    <string name="enter_your_child_s_id_number">Enter your child\'s ID</string>
+    <string name="enter_your_first_name">Enter your first name*</string>
+    <string name="enter_your_middle_name">Enter your middle name*</string>
+    <string name="enter_your_last_name">Enter your last name*</string>
+    <string name="enter_your_email_address">Enter your Email Address*</string>
+    <string name="enter_your_phone_number">Enter your phone number*</string>
+    <string name="enter_your_child_s_id_number">Enter your child\'s ID*</string>
+    <string name="attRegFailed">Registration Failed! Please enter a valid email</string>
+    <string name="attRegSuccessful">Registration Successful! Please check your email</string>
     <string-array name="Role">
         <item>Parent</item>
         <item>Attendee</item>

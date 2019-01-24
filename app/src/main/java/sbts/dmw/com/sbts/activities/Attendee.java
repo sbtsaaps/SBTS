@@ -7,6 +7,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -31,7 +32,8 @@ public class Attendee extends AppCompatActivity {
     private double along;
     private LatLng latlong;
     private LocationManager locationManager;
-    public String lat,lng;
+    public String lat,lng,userName;
+    private boolean exitCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +127,7 @@ public class Attendee extends AppCompatActivity {
                             Map<String, String> params = new HashMap<String, String>();
                             params.put("lat",String.valueOf(location.getLatitude()));
                             params.put("lng",String.valueOf(location.getLongitude()));
-                            params.put("email","aniket.y@somaiya.edu");
+                            params.put("email",intent.getStringExtra("USER_NAME"));
                             return params;
                         }
                     };
@@ -148,6 +150,7 @@ public class Attendee extends AppCompatActivity {
                 }
             });
         }
+        userName = intent.getStringExtra("USER_NAME");
     }
 
     public void StudentList(View view){
@@ -157,5 +160,67 @@ public class Attendee extends AppCompatActivity {
 
     public void Pickup(View view){
         // circulate a message notifying an issue with the bus and prompt the parent to pickup their kids from the location where the bus is at.
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        boolean eraseCheck = false;
+
+        if(exitCheck){
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    String url ="https://defcon12.000webhostapp.com/Locationout.php";
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    if(response.substring(1,2).contentEquals("0")){
+                                        Toast.makeText(getApplicationContext(),"Location erased!",Toast.LENGTH_LONG).show();
+                                        endMeth();
+                                    }else{
+                                        Toast.makeText(getApplicationContext(),"Failed to erase location.",Toast.LENGTH_LONG).show();
+                                        endMeth();
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(getApplicationContext(),error.toString(), Toast.LENGTH_LONG).show();
+                            endMeth();
+                        }
+                    }){
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<String, String>();
+                            params.put("lat","0.0");
+                            params.put("lng","0.0");
+                            params.put("email",userName);
+                            return params;
+                        }
+                    };
+                    MySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
+                }
+            },5000);
+        }
+
+        Toast.makeText(getApplicationContext(),"Press again to exit",Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                exitCheck = false;
+            }
+        },3000);
+        exitCheck = true;
+    }
+
+    public void endMeth(){
+        Intent end = new Intent(Intent.ACTION_MAIN);
+        end.addCategory(Intent.CATEGORY_HOME);
+        end.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(end);
+        finish();
+        System.exit(0);
     }
 }

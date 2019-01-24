@@ -56,9 +56,9 @@ public class registerAttendee extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         if(response.substring(1,2).contentEquals("0")){
-                            Toast.makeText(getApplicationContext(),"Registration Successful!",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),getString(R.string.attRegSuccessful),Toast.LENGTH_LONG).show();
                         }else{
-                            Toast.makeText(getApplicationContext(),"Registration Failed.",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), getString(R.string.attRegFailed),Toast.LENGTH_LONG).show();
                         }
                     }
                 }, new Response.ErrorListener() {
