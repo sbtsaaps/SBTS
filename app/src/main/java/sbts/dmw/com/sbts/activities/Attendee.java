@@ -148,8 +148,8 @@ public class Attendee extends AppCompatActivity {
     }
 
     public void StudentList(View view){
-        /*Intent Scan = new Intent(this,StudentList.class);
-        startActivity(Scan);*/
+        Intent Scan = new Intent(this,StudentList.class);
+        startActivity(Scan);
     }
 
     public void Pickup(View view){
