@@ -20,12 +20,11 @@ import com.android.volley.toolbox.StringRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-import sbts.dmw.com.sbts.MySingleton;
+import sbts.dmw.com.sbts.classes.MySingleton;
 import sbts.dmw.com.sbts.R;
 
 public class registerAttendee extends AppCompatActivity {
 
-    private TextView textView;
     private EditText first_Name, mid_Name, last_Name, email_Address, phone_Number;
 
     @Override
@@ -33,7 +32,7 @@ public class registerAttendee extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_attendee);
 
-        textView = findViewById(R.id.regAttendee);
+        TextView textView = findViewById(R.id.regAttendee);
         String text = "Attendee Registration";
         SpannableString ss = new SpannableString(text);
         ForegroundColorSpan fcs = new ForegroundColorSpan(Color.RED);
@@ -55,10 +54,11 @@ public class registerAttendee extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if(response.substring(1,2).contentEquals("0")){
-                            Toast.makeText(getApplicationContext(),getString(R.string.attRegSuccessful),Toast.LENGTH_LONG).show();
+                        if(response.trim().contains("success")){
+                            Toast.makeText(getApplicationContext(), getString(R.string.attRegSuccessful),Toast.LENGTH_LONG).show();
                         }else{
-                            Toast.makeText(getApplicationContext(), getString(R.string.attRegFailed),Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getApplicationContext(), getString(R.string.attRegFailed),Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
                         }
                     }
                 }, new Response.ErrorListener() {

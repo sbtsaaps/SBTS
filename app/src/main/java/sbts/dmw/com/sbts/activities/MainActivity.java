@@ -16,7 +16,9 @@ import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,24 +31,34 @@ import com.android.volley.toolbox.StringRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-import sbts.dmw.com.sbts.MySingleton;
 import sbts.dmw.com.sbts.R;
+import sbts.dmw.com.sbts.classes.MySingleton;
+import sbts.dmw.com.sbts.classes.SessionManager;
 
 public class MainActivity extends AppCompatActivity {
 
     private int LOCATION_PERMISSION_CODE = 1;
     private EditText usernameEnMap;
     private EditText passwordEnMap;
+    SessionManager sessionManager;
+    private ProgressBar loading;
+    private Button loginBtn;
+    private String role, email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       // SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("user",MODE_PRIVATE);
+        loading = findViewById(R.id.loading);
+        usernameEnMap = findViewById(R.id.username);
+        passwordEnMap = findViewById(R.id.password);
+        loginBtn = findViewById(R.id.loginBtn);
+        sessionManager = new SessionManager(this);
 
         final Intent RegForm = new Intent(this,RegisterUser.class);
         final Intent PassReset = new Intent(this,PasswordReset.class);
+
         TextView textView = findViewById(R.id.registerUser);
         String text = "If your not a registered user click here to sign-up";
         SpannableString ss = new SpannableString(text);
@@ -59,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void updateDrawState(TextPaint ds) {
                 super.updateDrawState(ds);
-                ds.setColor(Color.BLUE);
+                ds.setColor(Color.RED);
             }
         };
         ss.setSpan(cs,30,40,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -78,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void updateDrawState(TextPaint ds) {
                 super.updateDrawState(ds);
-                ds.setColor(Color.BLUE);
+                ds.setColor(Color.RED);
             }
         };
         ssf.setSpan(csf,0,16,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -90,40 +102,47 @@ public class MainActivity extends AppCompatActivity {
         }else{
             requestLocationPermission();
         }
+
+        loading.setVisibility(View.GONE);
+        loginBtn.setVisibility(View.VISIBLE);
     }
 
     public void EnableMaps(View view){
-        usernameEnMap = findViewById(R.id.username);
-        passwordEnMap = findViewById(R.id.password);
 
         if(usernameEnMap.getText().toString().isEmpty() || passwordEnMap.getText().toString().isEmpty()){
-            Toast.makeText(this,"Please fill both the username and password fields.",Toast.LENGTH_LONG).show();
+            if(usernameEnMap.getText().toString().isEmpty()){
+                usernameEnMap.setError("Please enter your email address");
+            }
+            if(passwordEnMap.getText().toString().isEmpty()){
+                passwordEnMap.setError("Please enter your password");
+            }
         }else{
-            String url ="https://defcon12.000webhostapp.com/login.php";
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+            loading.setVisibility(View.VISIBLE);
+            loginBtn.setVisibility(View.GONE);
+            String loginUrl = "https://defcon12.000webhostapp.com/login.php";
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, loginUrl,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            if(response.substring(1,2).contentEquals("0")){
-                                Toast.makeText(getApplicationContext(),"Login Successful!",Toast.LENGTH_LONG).show();
-                                if(response.substring(2,3).contentEquals("M")){
-                                    Intent EnAct = new Intent(MainActivity.this,MapsActivity.class);
-                                    startActivity(EnAct);
-                                }else{
-                                    String msg = usernameEnMap.getText().toString();
-                                    Intent Attend = new Intent(getApplicationContext(),Attendee.class);
-                                    Attend.putExtra("USER_NAME",msg);
-                                    startActivity(Attend);
-                                }
+                            if(!response.trim().equals("")){
+                                role = response.trim();
+                                email = usernameEnMap.getText().toString();
+                                sessionManager.createSession(email, role);
+                                Intent intent = new Intent(MainActivity.this,SessionCheck.class);
+                                startActivity(intent);
                                 finish();
                             }else{
-                                Toast.makeText(getApplicationContext(),"Please enter a valid username/password",Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(),"Please enter a valid email/password.",Toast.LENGTH_LONG).show();
+                                loading.setVisibility(View.GONE);
+                                loginBtn.setVisibility(View.VISIBLE);
                             }
                         }
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Toast.makeText(getApplicationContext(),"Sorry, there was an error in completing your request.",Toast.LENGTH_LONG).show();
+                            loading.setVisibility(View.GONE);
+                            loginBtn.setVisibility(View.VISIBLE);
                         }
                     }){
                     @Override

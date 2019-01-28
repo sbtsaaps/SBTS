@@ -1,4 +1,4 @@
-package sbts.dmw.com.sbts;
+package sbts.dmw.com.sbts.classes;
 
 import android.content.Context;
 

@@ -18,31 +18,30 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import sbts.dmw.com.sbts.MySingleton;
 import sbts.dmw.com.sbts.R;
+import sbts.dmw.com.sbts.classes.MySingleton;
+import sbts.dmw.com.sbts.classes.SessionManager;
 
 public class Attendee extends AppCompatActivity {
 
-    private double alat;
-    private double along;
-    private LatLng latlong;
-    private LocationManager locationManager;
-    public String lat,lng,userName;
-    private boolean exitCheck;
+    public String userName;
+    SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendee);
 
-        final Intent intent = getIntent();
+        sessionManager = new SessionManager(this);
 
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        Intent intent = getIntent();
+        userName = intent.getStringExtra("email");
+
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -62,10 +61,8 @@ public class Attendee extends AppCompatActivity {
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                    if(response.substring(1,2).contentEquals("0")){
-                                        Toast.makeText(getApplicationContext(),"Location captured!",Toast.LENGTH_LONG).show();
-                                    }else{
-                                        Toast.makeText(getApplicationContext(),"Failed to capture location.",Toast.LENGTH_LONG).show();
+                                    if(!response.trim().contains("success")) {
+                                        Toast.makeText(getApplicationContext(), "Failed to capture location.", Toast.LENGTH_LONG).show();
                                     }
                                 }
                             }, new Response.ErrorListener() {
@@ -79,7 +76,7 @@ public class Attendee extends AppCompatActivity {
                             Map<String, String> params = new HashMap<String, String>();
                             params.put("lat",String.valueOf(location.getLatitude()));
                             params.put("lng",String.valueOf(location.getLongitude()));
-                            params.put("email",intent.getStringExtra("USER_NAME"));
+                            params.put("email",userName);
                             return params;
                         }
                     };
@@ -110,9 +107,7 @@ public class Attendee extends AppCompatActivity {
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                    if(response.substring(1,2).contentEquals("0")){
-                                        Toast.makeText(getApplicationContext(),"Location captured!",Toast.LENGTH_LONG).show();
-                                    }else{
+                                    if(!response.trim().contains("success")){
                                         Toast.makeText(getApplicationContext(),"Failed to capture location.",Toast.LENGTH_LONG).show();
                                     }
                                 }
@@ -127,7 +122,7 @@ public class Attendee extends AppCompatActivity {
                             Map<String, String> params = new HashMap<String, String>();
                             params.put("lat",String.valueOf(location.getLatitude()));
                             params.put("lng",String.valueOf(location.getLongitude()));
-                            params.put("email",intent.getStringExtra("USER_NAME"));
+                            params.put("email",userName);
                             return params;
                         }
                     };
@@ -150,77 +145,18 @@ public class Attendee extends AppCompatActivity {
                 }
             });
         }
-        userName = intent.getStringExtra("USER_NAME");
     }
 
     public void StudentList(View view){
-        Intent Scan = new Intent(this,StudentList.class);
-        startActivity(Scan);
+        /*Intent Scan = new Intent(this,StudentList.class);
+        startActivity(Scan);*/
     }
 
     public void Pickup(View view){
         // circulate a message notifying an issue with the bus and prompt the parent to pickup their kids from the location where the bus is at.
     }
 
-    @Override
-    public void onBackPressed() {
-
-        boolean eraseCheck = false;
-
-        if(exitCheck){
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    String url ="https://defcon12.000webhostapp.com/Locationout.php";
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    if(response.substring(1,2).contentEquals("0")){
-                                        Toast.makeText(getApplicationContext(),"Location erased!",Toast.LENGTH_LONG).show();
-                                        endMeth();
-                                    }else{
-                                        Toast.makeText(getApplicationContext(),"Failed to erase location.",Toast.LENGTH_LONG).show();
-                                        endMeth();
-                                    }
-                                }
-                            }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(getApplicationContext(),error.toString(), Toast.LENGTH_LONG).show();
-                            endMeth();
-                        }
-                    }){
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            Map<String, String> params = new HashMap<String, String>();
-                            params.put("lat","0.0");
-                            params.put("lng","0.0");
-                            params.put("email",userName);
-                            return params;
-                        }
-                    };
-                    MySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
-                }
-            },5000);
-        }
-
-        Toast.makeText(getApplicationContext(),"Press again to exit",Toast.LENGTH_SHORT).show();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                exitCheck = false;
-            }
-        },3000);
-        exitCheck = true;
-    }
-
-    public void endMeth(){
-        Intent end = new Intent(Intent.ACTION_MAIN);
-        end.addCategory(Intent.CATEGORY_HOME);
-        end.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(end);
-        finish();
-        System.exit(0);
+    public void logOut(View view) {
+        sessionManager.logout();
     }
 }

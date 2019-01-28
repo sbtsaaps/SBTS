@@ -20,7 +20,7 @@ import com.android.volley.toolbox.StringRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-import sbts.dmw.com.sbts.MySingleton;
+import sbts.dmw.com.sbts.classes.MySingleton;
 import sbts.dmw.com.sbts.R;
 
 public class registerParent extends AppCompatActivity {

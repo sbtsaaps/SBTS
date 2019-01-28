@@ -17,8 +17,13 @@
     <string name="enter_your_email_address">Enter your Email Address*</string>
     <string name="enter_your_phone_number">Enter your phone number*</string>
     <string name="enter_your_child_s_id_number">Enter your child\'s ID*</string>
+    <string name="enter_your_password">Enter your password*</string>
     <string name="attRegFailed">Registration Failed! Please enter a valid email</string>
     <string name="attRegSuccessful">Registration Successful! Please check your email</string>
+    <string name="log_out">Log Out</string>
+    <string name="remember_me">Remember Me</string>
+    <string name="login">Login</string>
+    <string name="attendee_registration">Attendee Registration</string>
     <string-array name="Role">
         <item>Parent</item>
         <item>Attendee</item>
