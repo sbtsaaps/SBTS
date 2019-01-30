@@ -52,53 +52,53 @@ public class Attendee extends AppCompatActivity {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, new LocationListener() {
-                @Override
-                public void onLocationChanged(final Location location) {
-                    String url ="https://defcon12.000webhostapp.com/Locationout.php";
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    if(!response.trim().contains("success")) {
-                                        Toast.makeText(getApplicationContext(), "Failed to capture location.", Toast.LENGTH_LONG).show();
-                                    }
-                                }
-                            }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(getApplicationContext(),error.toString(), Toast.LENGTH_LONG).show();
-                        }
-                    }){
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            Map<String, String> params = new HashMap<String, String>();
-                            params.put("lat",String.valueOf(location.getLatitude()));
-                            params.put("lng",String.valueOf(location.getLongitude()));
-                            params.put("email",userName);
-                            return params;
-                        }
-                    };
-                    MySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
-                }
+        
+           
+              
+                
+                    
+                   
+                            
+                              
+                                
+                                    
+                                       
+                                    
+                                
+                          
+                       
+                        
+                            
+                        
+                
+                      
+                        
+                           
+                          
+                            
+                           
+                           
+                        
+                   
+                   
+                
 
-                @Override
-                public void onStatusChanged(String provider, int status, Bundle extras) {
+                
+                
 
-                }
+                
 
-                @Override
-                public void onProviderEnabled(String provider) {
+                
+               
 
-                }
+                
 
-                @Override
-                public void onProviderDisabled(String provider) {
+                
+            
 
-                }
-            });
-        }else if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+               
+
+if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
                 @Override
                 public void onLocationChanged(final Location location) {
