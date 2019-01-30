@@ -1,58 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.v4.widget.DrawerLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:id="@+id/drawer_layout"
+    tools:context=".activities.Attendee"
+    tools:openDrawer="start"
+    android:fitsSystemWindows="true" >
+
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:paddingTop="80dp"
+        android:background="@color/colorPrimary"
+        tools:context=".activities.Attendee">
+
+        <Button
+            android:id="@+id/scannerBtn"
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Student List"
+            android:onClick="StudentList"
+            android:background="@drawable/background"
+            android:textColor="@color/colorPrimary"/>
+
+        <Button
+            android:id="@+id/sosBtn"
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pickup"
+            android:onClick="Pickup"
+            android:background="@drawable/background"
+            android:textColor="@color/colorPrimary" />
+
+        <Button
+            android:id="@+id/logout"
+            android:layout_marginTop="350dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="logOut"
+            android:background="@drawable/background"
+            android:text="LOGOUT"
+            android:textColor="@color/colorPrimary" />
+
+        <!--<Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="8dp"
+            android:onClick="logOut"
+            android:text="@string/log_out"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sosBtn" />-->
+    </LinearLayout>
+
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/toolbar"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        />
+
+
+<android.support.design.widget.NavigationView
+    android:layout_width="300dp"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingLeft="30dp"
-    android:paddingRight="30dp"
-    android:paddingTop="80dp"
-    android:background="@color/colorPrimary"
-    tools:context=".activities.Attendee">
 
-    <Button
-        android:id="@+id/scannerBtn"
-        android:layout_marginTop="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Student List"
-        android:onClick="StudentList"
-        android:background="@drawable/background"
-        android:textColor="@color/colorPrimary"/>
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_view"
+    android:layout_gravity="start"
+    app:menu="@menu/attendee_menu"
+    app:headerLayout="@layout/header"
+    >
 
-    <Button
-        android:id="@+id/sosBtn"
-        android:layout_marginTop="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Pickup"
-        android:onClick="Pickup"
-        android:background="@drawable/background"
-        android:textColor="@color/colorPrimary" />
 
-    <Button
-        android:id="@+id/logout"
-        android:layout_marginTop="350dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="logOut"
-        android:background="@drawable/background"
-        android:text="LOGOUT"
-        android:textColor="@color/colorPrimary" />
 
-    <!--<Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="8dp"
-        android:onClick="logOut"
-        android:text="@string/log_out"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sosBtn" />-->
-</LinearLayout>
+</android.support.design.widget.NavigationView>
+
+
+
+
+
+
+
+
+
+
+
+</android.support.v4.widget.DrawerLayout>
