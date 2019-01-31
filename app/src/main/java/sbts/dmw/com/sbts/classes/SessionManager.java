@@ -10,6 +10,7 @@ import sbts.dmw.com.sbts.activities.Attendee;
 import sbts.dmw.com.sbts.activities.MainActivity;
 import sbts.dmw.com.sbts.activities.MapsActivity;
 import sbts.dmw.com.sbts.activities.SessionCheck;
+import sbts.dmw.com.sbts.activities.main_container;
 
 public class SessionManager {
 
@@ -60,7 +61,7 @@ public class SessionManager {
         Intent i = new Intent(context, MainActivity.class);
         context.startActivity(i);
         try{
-            ((Attendee) context).finish();
+            ((main_container) context).finish();
         }catch (Exception ignored){
 
         }

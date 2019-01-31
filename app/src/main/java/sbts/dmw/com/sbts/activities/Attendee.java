@@ -8,9 +8,19 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -34,12 +44,15 @@ public class Attendee extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_attendee);
+        setContentView(R.layout.attendee_view);
 
         sessionManager = new SessionManager(this);
 
         Intent intent = getIntent();
         userName = intent.getStringExtra("email");
+
+
+
 
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -52,77 +65,31 @@ public class Attendee extends AppCompatActivity {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        
-           
-              
-                
-                    
-                   
-                            
-                              
-                                
-                                    
-                                       
-                                    
-                                
-                          
-                       
-                        
-                            
-                        
-                
-                      
-                        
-                           
-                          
-                            
-                           
-                           
-                        
-                   
-                   
-                
-
-                
-                
-
-                
-
-                
-               
-
-                
-
-                
-            
-
-               
-
-if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
                 @Override
                 public void onLocationChanged(final Location location) {
-                    String url ="https://defcon12.000webhostapp.com/Locationout.php";
+                    String url = "https://defcon12.000webhostapp.com/Locationout.php";
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                    if(!response.trim().contains("success")){
-                                        Toast.makeText(getApplicationContext(),"Failed to capture location.",Toast.LENGTH_LONG).show();
+                                    if (!response.trim().contains("success")) {
+                                        Toast.makeText(getApplicationContext(), "Failed to capture location.", Toast.LENGTH_LONG).show();
                                     }
                                 }
                             }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(getApplicationContext(),error.toString(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
                         }
-                    }){
+                    }) {
                         @Override
                         protected Map<String, String> getParams() throws AuthFailureError {
                             Map<String, String> params = new HashMap<String, String>();
-                            params.put("lat",String.valueOf(location.getLatitude()));
-                            params.put("lng",String.valueOf(location.getLongitude()));
-                            params.put("email",userName);
+                            params.put("lat", String.valueOf(location.getLatitude()));
+                            params.put("lng", String.valueOf(location.getLongitude()));
+                            params.put("email", userName);
                             return params;
                         }
                     };
@@ -147,16 +114,21 @@ if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
         }
     }
 
-    public void StudentList(View view){
-        Intent Scan = new Intent(this,StudentList.class);
+    public void StudentList(View view) {
+        Intent Scan = new Intent(this, StudentList.class);
         startActivity(Scan);
     }
 
-    public void Pickup(View view){
+    public void Pickup(View view) {
         // circulate a message notifying an issue with the bus and prompt the parent to pickup their kids from the location where the bus is at.
     }
 
     public void logOut(View view) {
         sessionManager.logout();
     }
-}
+
+
+    }
+
+
+

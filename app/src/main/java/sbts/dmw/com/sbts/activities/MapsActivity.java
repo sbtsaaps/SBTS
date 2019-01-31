@@ -50,54 +50,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        
-          
-              
-                
-                 
-                   
-                  
-       
-                 
-                      
-                        
-                        
-                        
-                        
-                    
-                      
-                    
-                
 
-               
-                
-
-                
-
-                
-                
-
-                
-
-              
-                
-
-              
-            
-       if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
                     double lat = location.getLatitude();
                     double lng = location.getLongitude();
-                    LatLng latLng = new LatLng(lat,lng);
+                    LatLng latLng = new LatLng(lat, lng);
                     Geocoder geocoder = new Geocoder(getApplicationContext());
                     try {
                         List<Address> addressList = geocoder.getFromLocation(lat, lng, 1);
-                        String str = addressList.get(0).getLocality()+" ";
+                        String str = addressList.get(0).getLocality() + " ";
                         str += addressList.get(0).getCountryName();
                         mMap.addMarker(new MarkerOptions().position(latLng).title(str));
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,16.5f));
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16.5f));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

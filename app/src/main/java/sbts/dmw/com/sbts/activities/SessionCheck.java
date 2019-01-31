@@ -29,9 +29,9 @@ public class SessionCheck extends AppCompatActivity {
 
         if(sRole!=null){
             if(sRole.contains("Attendee")){
-                Intent attendee = new Intent(SessionCheck.this, Attendee.class);
-                attendee.putExtra("email",sEmail);
-                startActivity(attendee);
+                Intent container = new Intent(SessionCheck.this, main_container.class);
+               // container.putExtra("email",sEmail);
+                startActivity(container);
                 finish();
             }else{
                 Intent parent = new Intent(SessionCheck.this, MapsActivity.class);

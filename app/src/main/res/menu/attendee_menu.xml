@@ -12,6 +12,7 @@
         <item
             android:id="@+id/map"
             android:title="Map"
+            android:icon="@drawable/ic_map"
             
             />
         <item
@@ -22,6 +23,7 @@
         <item
             android:id="@+id/profile"
             android:title="Profile"
+            android:icon="@drawable/ic_home_black_24dp"
            
             />
         <item
